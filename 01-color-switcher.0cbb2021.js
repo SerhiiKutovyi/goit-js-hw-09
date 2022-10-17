@@ -1,0 +1,2 @@
+const t=document.querySelector('button[data-start="start"]');console.log(t);const o=document.querySelector('button[data-stop="stop"]');console.log(o);let e=null,n=!1;t.addEventListener("click",(()=>{n||(n=!0,e=setInterval((()=>{randomColor=`#${Math.floor(16777215*Math.random()).toString(16)}`,document.body.style.backgroundColor=randomColor}),1e3))})),o.addEventListener("click",(()=>{clearInterval(e),n=!1}));
+//# sourceMappingURL=01-color-switcher.0cbb2021.js.map
