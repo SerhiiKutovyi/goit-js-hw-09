@@ -8,17 +8,21 @@ const ref = {
 
 let timerID = null;
 
-ref.input.addEventListener('click', flatPickr);
-console.log(ref.input);
+ref.input.addEventListener('click', flatPickr, () => {});
 
 ref.button.addEventListener('click', () => {
+  const startTime = Date.now();
+
   timerID = setInterval(() => {
-    console.log('getSeconds!!!!!', Date(timerID));
-  }, -1000);
+    const currentTime = Date.now();
+    const newTime = currentTime - startTime;
+    const { days, hours, minutes, seconds } = convertMs(newTime);
+    console.log(`${days}:${hours}:${minutes}:${seconds}`);
+  }, 1000);
 });
 
-function flatPickr(event) {
-  event.preventDefault();
+function flatPickr() {
+  // event.preventDefault();
 
   new flatpickr('input[type = "text"]', {
     altInput: true,
@@ -26,13 +30,17 @@ function flatPickr(event) {
     dateFormat: 'Y-m-d',
     enableTime: true,
     time_24hr: true,
-    defaultDate: new Date(),
     minuteIncrement: 1,
     onClose(selectedDates) {
       console.log(selectedDates[0]);
     },
   });
 }
+
+function addLeadingZero(value) {
+  return String(value).padStart(2, '0');
+}
+
 function convertMs(ms) {
   // Number of milliseconds per unit of time
   const second = 1000;
@@ -41,24 +49,15 @@ function convertMs(ms) {
   const day = hour * 24;
 
   // Remaining days
-  const days = Math.floor(ms / day);
+  const days = addLeadingZero(Math.floor(ms / day));
   // Remaining hours
-  const hours = Math.floor((ms % day) / hour);
+  const hours = addLeadingZero(Math.floor((ms % day) / hour));
   // Remaining minutes
-  const minutes = Math.floor(((ms % day) % hour) / minute);
+  const minutes = addLeadingZero(Math.floor(((ms % day) % hour) / minute));
   // Remaining seconds
-  const seconds = Math.floor((((ms % day) % hour) % minute) / second);
+  const seconds = addLeadingZero(
+    Math.floor((((ms % day) % hour) % minute) / second)
+  );
 
   return { days, hours, minutes, seconds };
 }
-
-// const timer = {
-//   start() {
-//     const startTime = Date.now();
-//     // setInterval(() => {
-//     //   const currentTime = Date.now();
-//     //   console.log('start => currentTime', currentTime);
-//     // }, 3000);
-//   },
-// };
-// timer.start();
