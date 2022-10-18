@@ -6,11 +6,9 @@ const ref = {
   button: document.querySelector('button[data-start]'),
 };
 
-
-
 let timerID = null;
 
-ref.input.addEventListener('click', flatPickr)
+ref.input.addEventListener('click', flatPickr);
 console.log(ref.input);
 
 ref.button.addEventListener('click', () => {
@@ -20,12 +18,14 @@ ref.button.addEventListener('click', () => {
 });
 
 function flatPickr(event) {
-    flatpickr(input[type = 'text'], {
-        enableTime: true,
-        time_24hr: true,
-       
-    }),
-       
+  event.preventDefault();
+
+  new flatpickr('input[type = "text"]', {
+    altInput: true,
+    altFormat: 'F j, Y',
+    dateFormat: 'Y-m-d',
+  });
+}
 function convertMs(ms) {
   // Number of milliseconds per unit of time
   const second = 1000;
