@@ -13,8 +13,8 @@ console.log(ref.input);
 
 ref.button.addEventListener('click', () => {
   timerID = setInterval(() => {
-    console.log('getSeconds!!!!!', new Date());
-  }, 1000);
+    console.log('getSeconds!!!!!', Date(timerID));
+  }, -1000);
 });
 
 function flatPickr(event) {
@@ -24,6 +24,13 @@ function flatPickr(event) {
     altInput: true,
     altFormat: 'F j, Y',
     dateFormat: 'Y-m-d',
+    enableTime: true,
+    time_24hr: true,
+    defaultDate: new Date(),
+    minuteIncrement: 1,
+    onClose(selectedDates) {
+      console.log(selectedDates[0]);
+    },
   });
 }
 function convertMs(ms) {
