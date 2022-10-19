@@ -4,8 +4,14 @@ import 'flatpickr/dist/flatpickr.min.css';
 const ref = {
   input: document.querySelector('#datetime-picker'),
   button: document.querySelector('button[data-start]'),
-};
 
+  daysSpan: document.querySelector('.value[data-days]'),
+
+  hoursSpan: document.querySelector('.value[data-hours]'),
+  minutesSpan: document.querySelector('.value[data-mins]'),
+  secondsSpan: document.querySelector('.value[data-secs]'),
+};
+console.log(ref.daysSpan);
 let timerID = null;
 
 ref.input.addEventListener('click', flatPickr, () => {});
@@ -50,14 +56,16 @@ function convertMs(ms) {
 
   // Remaining days
   const days = addLeadingZero(Math.floor(ms / day));
+  ref.daysSpan.textContent = days;
   // Remaining hours
   const hours = addLeadingZero(Math.floor((ms % day) / hour));
   // Remaining minutes
   const minutes = addLeadingZero(Math.floor(((ms % day) % hour) / minute));
   // Remaining seconds
+
   const seconds = addLeadingZero(
     Math.floor((((ms % day) % hour) % minute) / second)
   );
-
+  seconds = ref.secondsSpan.textContent;
   return { days, hours, minutes, seconds };
 }
