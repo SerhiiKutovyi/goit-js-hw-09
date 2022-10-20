@@ -12,22 +12,30 @@ const ref = {
   secondsSpan: document.querySelector('.value[data-seconds]'),
 };
 
-let timerID = 0;
-let timeFromInput = 0;
 ref.button.disabled = true;
-
+let timeFromInput;
+let isActive = false;
+let i = 0;
 ref.input.addEventListener('click', flatPickr);
 ref.button.addEventListener('click', timer);
 
 function timer() {
-  const startTime = Date.now();
+  if (isActive) {
+    return;
+  }
+  isActive = true;
 
-  setInterval(() => {
+  let timerId = setInterval(() => {
+    if (i >= timeFromInput - Date.now()) {
+      clearInterval(timerId);
+    }
+
     const currentTime = Date.now();
+    console.log(currentTime);
+    const newTime = timeFromInput - currentTime;
 
-    const newTime = currentTime - startTime;
     const { days, hours, minutes, seconds } = convertMs(newTime);
-    console.log(`${days}:${hours}:${minutes}:${seconds}`);
+    // console.log(convertMs(newTime) - timeFromInput);
     ref.daysSpan.textContent = `${days}`;
     ref.hoursSpan.textContent = `${hours}`;
     ref.minutesSpan.textContent = `${minutes}`;
@@ -42,22 +50,18 @@ const options = {
   minuteIncrement: 1,
   onClose(selectedDates) {
     if (selectedDates[0] < Date.now()) {
-      Notiflix.Report.success(
-  'ВНИМАНИЕ',
-  'Message',
-  'Button Text',
-  function cb() {
-    // callback
-     ref.button.disabled = false;
-  },
-);
-    } 
-    // timeFromInput = selectedDates[0];
-    console.log(timeFromInput);
+      Notiflix.Notify.failure('Please choose a date in the future');
+    } else {
+      Notiflix.Notify.success('GREAT ! YOU ARE IN THE FUTURE.');
+      ref.button.disabled = false;
+
+      timeFromInput = selectedDates[0];
+      console.log(timeFromInput);
+    }
   },
 };
 
-new flatpickr('#datetime-picker', options);
+new flatpickr(ref.input, options);
 
 function flatPickr(event) {
   event.preventDefault();
