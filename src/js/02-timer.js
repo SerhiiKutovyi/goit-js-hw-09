@@ -1,4 +1,4 @@
-import Notiflix from 'notiflix';
+import Notiflix, { Loading } from 'notiflix';
 import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
 
@@ -58,11 +58,6 @@ const options = {
   },
 };
 
-// ref.input.addEventListener('click', flatPickr);
-
-function flatPickr(event) {
-  event.preventDefault();
-}
 new flatpickr(ref.input, options);
 
 function addLeadingZero(value) {
