@@ -15,7 +15,8 @@ const ref = {
 ref.button.disabled = true;
 let timeFromInput;
 let isActive = false;
-let i = 0;
+let i = 1000;
+
 ref.input.addEventListener('click', flatPickr);
 ref.button.addEventListener('click', timer);
 
@@ -51,6 +52,7 @@ const options = {
   onClose(selectedDates) {
     if (selectedDates[0] < Date.now()) {
       Notiflix.Notify.failure('Please choose a date in the future');
+      ref.button.disabled = true;
     } else {
       Notiflix.Notify.success('GREAT ! YOU ARE IN THE FUTURE.');
       ref.button.disabled = false;
