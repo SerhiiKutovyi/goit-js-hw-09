@@ -7,7 +7,6 @@ const startBtn = document
     if (isActive) {
       return;
     }
-
     isActive = true;
     timerId = setInterval(() => {
       randomColor = `#${Math.floor(Math.random() * 16777215).toString(16)}`;
