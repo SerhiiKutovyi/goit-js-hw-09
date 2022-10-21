@@ -3,7 +3,6 @@ import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
 
 const ref = {
-  input: document.querySelector('#datetime-picker'),
   button: document.querySelector('button[data-start]'),
 
   daysSpan: document.querySelector('.value[data-days]'),
@@ -17,7 +16,6 @@ let timeFromInput;
 let isActive = false;
 let i = 1000;
 
-ref.input.addEventListener('click', flatPickr);
 ref.button.addEventListener('click', timer);
 
 function timer() {
@@ -32,11 +30,9 @@ function timer() {
     }
 
     const currentTime = Date.now();
-    console.log(currentTime);
     const newTime = timeFromInput - currentTime;
-
     const { days, hours, minutes, seconds } = convertMs(newTime);
-    // console.log(convertMs(newTime) - timeFromInput);
+
     ref.daysSpan.textContent = `${days}`;
     ref.hoursSpan.textContent = `${hours}`;
     ref.minutesSpan.textContent = `${minutes}`;
@@ -56,37 +52,34 @@ const options = {
     } else {
       Notiflix.Notify.success('GREAT ! YOU ARE IN THE FUTURE.');
       ref.button.disabled = false;
-
       timeFromInput = selectedDates[0];
-      console.log(timeFromInput);
     }
   },
 };
 
-new flatpickr(ref.input, options);
+const input = document
+  .querySelector('#datetime-picker')
+  .addEventListener('click', () => {
+    flatPickr = event => {
+      event.preventDefault();
+    };
+  });
 
-function flatPickr(event) {
-  event.preventDefault();
-}
+new flatpickr(input, options);
 
 function addLeadingZero(value) {
   return String(value).padStart(2, '0');
 }
 
 function convertMs(ms) {
-  // Number of milliseconds per unit of time
   const second = 1000;
   const minute = second * 60;
   const hour = minute * 60;
   const day = hour * 24;
 
-  // Remaining days
   const days = addLeadingZero(Math.floor(ms / day));
-  // Remaining hours
   const hours = addLeadingZero(Math.floor((ms % day) / hour));
-  // Remaining minutes
   const minutes = addLeadingZero(Math.floor(((ms % day) % hour) / minute));
-  // Remaining seconds
   const seconds = addLeadingZero(
     Math.floor((((ms % day) % hour) % minute) / second)
   );
