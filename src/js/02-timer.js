@@ -1,4 +1,4 @@
-import Notiflix, { Loading } from 'notiflix';
+import Notiflix from 'notiflix';
 import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
 
