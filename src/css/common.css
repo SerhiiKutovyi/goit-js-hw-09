@@ -18,6 +18,7 @@ img {
 }
 
 .timer {
+  margin-top: 80px;
   display: flex;
   justify-content: center;
   gap: 30px;
@@ -26,7 +27,4 @@ img {
 .value {
   font-weight: bold;
   font-size: 80px;
-}
-
-.button {
 }

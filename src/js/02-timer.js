@@ -51,7 +51,7 @@ const options = {
       Notiflix.Notify.failure('Please choose a date in the future');
       ref.button.disabled = true;
     } else {
-      Notiflix.Notify.success('GREAT ! YOU ARE IN THE FUTURE.');
+      Notiflix.Notify.success('PRESS START!!!');
       ref.button.disabled = false;
       timeFromInput = selectedDates[0];
     }
